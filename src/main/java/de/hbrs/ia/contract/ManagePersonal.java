@@ -1,4 +1,5 @@
 package de.hbrs.ia.contract;
+import de.hbrs.ia.model.*;
 
 import java.util.List;
 
