@@ -8,6 +8,9 @@ import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -21,6 +24,8 @@ class HighPerformanceTest {
     void setUp() {
         // Setting up the connection to a local MongoDB with standard port 27017
         // must be started within a terminal with command 'mongod'.
+        Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
+        mongoLogger.setLevel(Level.SEVERE);
         client = new MongoClient("localhost", 27017);
 
         // Get database 'highperformance' (creates one if not available)
