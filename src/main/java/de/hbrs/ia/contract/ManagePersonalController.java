@@ -1,7 +1,7 @@
 package de.hbrs.ia.contract;
 
-import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import de.hbrs.ia.model.EvaluationRecord;
@@ -9,6 +9,7 @@ import de.hbrs.ia.model.SalesMan;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -59,7 +60,12 @@ public class ManagePersonalController implements ManagePersonal {
         List<SalesMan> salesmenList = new ArrayList<>();
         List<Document> results = new ArrayList<>();
 
-        System.out.println(salesmen.find(eq(attribute, key)));
+        FindIterable<Document> cursor = salesmen.find(eq(attribute, key));
+
+        for (Document document : cursor) {
+            results.add(document);
+        }
+
         for(Document result : results){
             salesmenList.add(new SalesMan(result.getString("firstname"),
                                         result.getString("lastname"), result.getInteger("id")));
