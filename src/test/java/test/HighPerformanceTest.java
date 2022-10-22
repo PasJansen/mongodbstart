@@ -47,6 +47,7 @@ class HighPerformanceTest {
         System.out.println("Printing the object (JSON): " + newDocument );
 
         // Assertion
+        assert newDocument != null;
         Integer id = (Integer) newDocument.get("id");
         assertEquals( 90133 , id );
 

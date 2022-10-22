@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f1b44b0-4365-4838-bfba-25eccbbe27ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hbrs/ia/contract/MangePersonal_Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hbrs/ia/contract/MangePersonalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hbrs/ia/model/EvaluationRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hbrs/ia/model/EvaluationRecord.java" afterDir="false" />
-    </list>
+    <list default="true" id="3f1b44b0-4365-4838-bfba-25eccbbe27ef" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +35,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -67,7 +63,7 @@
       <option name="presentableId" value="Default" />
       <updated>1666437645894</updated>
       <workItem from="1666437648526" duration="25000" />
-      <workItem from="1666437743081" duration="405000" />
+      <workItem from="1666437743081" duration="2640000" />
     </task>
     <servers />
   </component>
