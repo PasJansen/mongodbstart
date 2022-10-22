@@ -5,7 +5,7 @@ import de.hbrs.ia.model.SalesMan;
 
 import java.util.List;
 
-public class MangePersonal_Controller implements ManagePersonal {
+public class MangePersonalController implements ManagePersonal {
 
     @Override
     public void createSalesMan(SalesMan record) {

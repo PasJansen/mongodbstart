@@ -1,42 +1,42 @@
 package de.hbrs.ia.model;
 
 public class EvaluationRecord{
-    private int goal_id;
-    private String goal_description;
-    private double target_value;
-    private double actual_value;
+    private int goalId;
+    private String goalDescription;
+    private double targetValue;
+    private double actualValue;
     private int year;
 
-    public int getGoal_id() {
-        return goal_id;
+    public int getGoalId() {
+        return goalId;
     }
 
-    public void setGoal_id(int goal_id) {
-        this.goal_id = goal_id;
+    public void setGoalId(int goalId) {
+        this.goalId = goalId;
     }
 
-    public String getGoal_description() {
-        return goal_description;
+    public String getGoalDescription() {
+        return goalDescription;
     }
 
-    public void setGoal_description(String goal_description) {
-        this.goal_description = goal_description;
+    public void setGoalDescription(String goalDescription) {
+        this.goalDescription = goalDescription;
     }
 
-    public double getTarget_value() {
-        return target_value;
+    public double getTargetValue() {
+        return targetValue;
     }
 
-    public void setTarget_value(double target_value) {
-        this.target_value = target_value;
+    public void setTargetValue(double targetValue) {
+        this.targetValue = targetValue;
     }
 
-    public double getActual_value() {
-        return actual_value;
+    public double getActualValue() {
+        return actualValue;
     }
 
-    public void setActual_value(double actual_value) {
-        this.actual_value = actual_value;
+    public void setActualValue(double actualValue) {
+        this.actualValue = actualValue;
     }
 
     public int getYear() {
@@ -48,10 +48,10 @@ public class EvaluationRecord{
     }
 
     public EvaluationRecord(int g_id, String g_desc, double target_val, double actual_val, int year){
-        this.goal_id = g_id;
-        this.goal_description = g_desc;
-        this.target_value = target_val;
-        this.actual_value= actual_val;
+        this.goalId = g_id;
+        this.goalDescription = g_desc;
+        this.targetValue = target_val;
+        this.actualValue= actual_val;
         this.year = year;
     }
 
