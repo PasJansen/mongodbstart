@@ -24,8 +24,11 @@ class HighPerformanceTest {
     void setUp() {
         // Setting up the connection to a local MongoDB with standard port 27017
         // must be started within a terminal with command 'mongod'.
+
+        //Disable unnecessary logging
         Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
         mongoLogger.setLevel(Level.SEVERE);
+
         client = new MongoClient("localhost", 27017);
 
         // Get database 'highperformance' (creates one if not available)
@@ -45,7 +48,8 @@ class HighPerformanceTest {
         document.append("id" , 90133);
 
         // ... now storing the object
-        salesmen.insertOne(document);
+
+        System.out.println(this.salesmen.find());
 
         // READ (Finding) the stored Documnent
         Document newDocument = this.salesmen.find().first();

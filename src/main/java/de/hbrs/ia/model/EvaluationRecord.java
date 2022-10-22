@@ -1,11 +1,15 @@
 package de.hbrs.ia.model;
 
+import org.bson.Document;
+
 public class EvaluationRecord{
     private int goalId;
     private String goalDescription;
     private double targetValue;
     private double actualValue;
     private int year;
+
+    private int salesmenId;
 
     public int getGoalId() {
         return goalId;
@@ -43,10 +47,16 @@ public class EvaluationRecord{
         return year;
     }
 
+    public int getSalesmenId(){
+        return this.salesmenId;
+    }
+    public void setSalesmenId(int id){
+        this.salesmenId = id;
+    }
+
     public void setYear(int year) {
         this.year = year;
     }
-
     public EvaluationRecord(int g_id, String g_desc, double target_val, double actual_val, int year){
         this.goalId = g_id;
         this.goalDescription = g_desc;
@@ -54,5 +64,15 @@ public class EvaluationRecord{
         this.actualValue= actual_val;
         this.year = year;
     }
-
+    public Document toDocument() {
+        org.bson.Document document = new Document();
+        document.append("goal_id" , this.goalId );
+        document.append("goal_description" , this.goalDescription );
+        document.append("target_value" , this.targetValue);
+        document.append("actual_value" , this.actualValue);
+        document.append("year" , this.year);
+        return document;
+    }
 }
+
+
