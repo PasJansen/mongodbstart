@@ -115,7 +115,7 @@ public class ManagePersonalController implements ManagePersonal {
             throw new Exception("Salesman with the ID " + sid + " not found.");
         }
         salesmen.deleteOne(eq("id", sid));
-        return new SalesMan( salesman.getString("firstname"), salesman.getString("lastname"), salesman.getInteger("id"),);
+        return new SalesMan( salesman.getString("firstname"), salesman.getString("lastname"), salesman.getInteger("id"));
     }
     @Override
     public EvaluationRecord deleteEvaluationRecord(int sid) throws Exception {
