@@ -12,7 +12,6 @@ public class SalesMan {
         this.lastname = lastname;
         this.id = id;
     }
-
     public String getFirstname() {
         return firstname;
     }

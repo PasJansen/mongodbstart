@@ -4,21 +4,23 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 import de.hbrs.ia.model.EvaluationRecord;
 import de.hbrs.ia.model.SalesMan;
 import org.bson.Document;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
+
 public class ManagePersonalController implements ManagePersonal {
 
     private MongoClient client;
     private MongoDatabase database;
     private MongoCollection<Document> salesmen;
-    private MongoCollection<Document> performanceRecords;
+    private MongoCollection<Document> evaluationRecords;
 
     public ManagePersonalController() {
         this.client = new MongoClient("localhost", 27017);
@@ -40,13 +42,16 @@ public class ManagePersonalController implements ManagePersonal {
     @Override
     public void addPerformanceRecord(EvaluationRecord record, int sid) {
         //TODO Add evalRecord to existing SalesMan (exception if Salesman not found)
-        performanceRecords.insertOne(record.toDocument());
+        evaluationRecords.insertOne(record.toDocument());
     }
 
     @Override
-    public SalesMan readSalesMan(int sid) {
+    public SalesMan readSalesMan(int sid) throws Exception {
         //TODO read DB entry
         Document salesmenDoc = this.salesmen.find(eq("id", sid)).first();
+        if(salesmenDoc == null){
+            throw new Exception("Salesman with the ID " +  sid + " not found.");
+        }
         String firstname = salesmenDoc.getString("firstname");
         String lastname = salesmenDoc.getString("lastname");
         int id = salesmenDoc.getInteger("id");
@@ -66,21 +71,62 @@ public class ManagePersonalController implements ManagePersonal {
             results.add(document);
         }
 
-        for(Document result : results){
+        for (Document result : results) {
             salesmenList.add(new SalesMan(result.getString("firstname"),
-                                        result.getString("lastname"), result.getInteger("id")));
+                    result.getString("lastname"), result.getInteger("id")));
         }
 
         return salesmenList;
     }
 
     @Override
-    public EvaluationRecord readEvaluationRecords(int sid) {
+    public EvaluationRecord readEvaluationRecords(int sid) throws Exception {
         //TODO read evalRecord from existing SalesMan (exception if Salesman not found)
-        
 
-        return null;
+        Document salesman = salesmen.find(eq("id", sid)).first();
+        if (salesman == null) {
+            throw new Exception("Salesman with the ID " + sid + " not found");
+        }
+
+        Document evalRecord = evaluationRecords.find(eq("salesman_id", sid)).first();
+
+        if (evalRecord == null) {
+            throw new Exception(("Evaluation Record for Salesman with the ID " + sid + " not found."));
+        }
+
+
+        return new EvaluationRecord(evalRecord);
+    }
+    //TODO CRUD -> Create Read Update Delete -> Create and Read represented, implement Update and Delete functions
+    @Override
+    public void updateSalesMan(int sid, String key, String value) {
+       salesmen.updateOne(eq("id", sid), set(key, value));
     }
 
-    //TODO CRUD -> Create Read Update Delete -> Create and Read represented, implement Update and Delete functions
+    @Override
+    public void updateEvaluationRecord(int sid, String key, String value) {
+        evaluationRecords.updateOne(eq("salesman_id", sid), set(key, value));
+    }
+
+    @Override
+    public SalesMan deleteSalesman(int sid) throws Exception {
+        Document salesman = salesmen.find(eq("id", sid)).first();
+        if (salesman == null){
+            throw new Exception("Salesman with the ID " + sid + " not found.");
+        }
+        salesmen.deleteOne(eq("id", sid));
+        return new SalesMan( salesman.getString("firstname"), salesman.getString("lastname"), salesman.getInteger("id"),);
+    }
+    @Override
+    public EvaluationRecord deleteEvaluationRecord(int sid) throws Exception {
+        Document evalRecord = evaluationRecords.find(eq("salesman_id", sid)).first();
+        if(evalRecord == null){
+            throw new Exception(("Evaluation Record for Salesman with the ID " + sid + " not found."));
+        }
+        DeleteResult result = evaluationRecords.deleteOne(eq("salesman_id", sid));
+
+        return new EvaluationRecord(evalRecord);
+    }
+
+
 }

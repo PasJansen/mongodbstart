@@ -11,9 +11,17 @@ public interface ManagePersonal {
 
     void addPerformanceRecord( EvaluationRecord record , int sid );
 
-    SalesMan readSalesMan( int sid );
+    SalesMan readSalesMan( int sid ) throws Exception;
 
     List<SalesMan> querySalesMan(String attribute , String key );
 
-    EvaluationRecord readEvaluationRecords( int sid );
+    EvaluationRecord readEvaluationRecords( int sid ) throws Exception;
+
+    void updateSalesMan(int sid, String key, String value);
+
+    void updateEvaluationRecord(int sid, String key, String value);
+
+    SalesMan deleteSalesman(int sid) throws Exception;
+
+    EvaluationRecord deleteEvaluationRecord(int sid) throws Exception;
 }
