@@ -5,6 +5,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import de.hbrs.ia.model.EvaluationRecord;
 import de.hbrs.ia.model.SalesMan;
 import org.bson.Document;
@@ -99,31 +100,45 @@ public class ManagePersonalController implements ManagePersonal {
     }
     //TODO CRUD -> Create Read Update Delete -> Create and Read represented, implement Update and Delete functions
     @Override
-    public void updateSalesMan(int sid, String key, String value) {
-       salesmen.updateOne(eq("id", sid), set(key, value));
+    public boolean updateSalesMan(int sid, String key, String value) {
+       UpdateResult res = salesmen.updateOne(eq("id", sid), set(key, value));
+       return res.wasAcknowledged();
     }
 
     @Override
-    public void updateEvaluationRecord(int sid, String key, String value) {
-        evaluationRecords.updateOne(eq("salesman_id", sid), set(key, value));
+    public boolean updateEvaluationRecord(int sid, String key, String value) {
+        UpdateResult res = evaluationRecords.updateOne(eq("salesman_id", sid), set(key, value));
+        return res.wasAcknowledged();
     }
 
     @Override
     public SalesMan deleteSalesman(int sid) throws Exception {
         Document salesman = salesmen.find(eq("id", sid)).first();
+        // Checks if Salesman exists
         if (salesman == null){
             throw new Exception("Salesman with the ID " + sid + " not found.");
         }
-        salesmen.deleteOne(eq("id", sid));
+
+        DeleteResult result = salesmen.deleteOne(eq("id", sid));
+        //Check if deletion of Salesman was successful
+        if(!result.wasAcknowledged()){
+            throw new Exception("Deletion of Salesman was not successful");
+        }
+
         return new SalesMan( salesman.getString("firstname"), salesman.getString("lastname"), salesman.getInteger("id"));
     }
     @Override
     public EvaluationRecord deleteEvaluationRecord(int sid) throws Exception {
         Document evalRecord = evaluationRecords.find(eq("salesman_id", sid)).first();
+        // Checks if Evaluation Record exists
         if(evalRecord == null){
             throw new Exception(("Evaluation Record for Salesman with the ID " + sid + " not found."));
         }
         DeleteResult result = evaluationRecords.deleteOne(eq("salesman_id", sid));
+        //Check if deletion of Evaluation Record was successful
+        if(!result.wasAcknowledged()){
+            throw new Exception("Deletion of EvaluationRecord was not successful");
+        }
 
         return new EvaluationRecord(evalRecord);
     }

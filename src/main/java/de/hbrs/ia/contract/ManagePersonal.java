@@ -17,9 +17,9 @@ public interface ManagePersonal {
 
     EvaluationRecord readEvaluationRecords( int sid ) throws Exception;
 
-    void updateSalesMan(int sid, String key, String value);
+    boolean updateSalesMan(int sid, String key, String value);
 
-    void updateEvaluationRecord(int sid, String key, String value);
+    boolean updateEvaluationRecord(int sid, String key, String value);
 
     SalesMan deleteSalesman(int sid) throws Exception;
 
