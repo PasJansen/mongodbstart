@@ -15,11 +15,11 @@ public interface ManagePersonal {
 
     List<SalesMan> querySalesMan(String attribute , String key );
 
-    EvaluationRecord readEvaluationRecords( int sid ) throws Exception;
+    EvaluationRecord readEvaluationRecord( int sid ) throws Exception;
 
-    boolean updateSalesMan(int sid, String key, String value);
+    boolean updateSalesMan(int sid, String key,  Object value);
 
-    boolean updateEvaluationRecord(int sid, String key, String value);
+    boolean updateEvaluationRecord(int sid, String key, Object value);
 
     SalesMan deleteSalesman(int sid) throws Exception;
 

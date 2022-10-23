@@ -48,7 +48,7 @@ class HighPerformanceTest {
         document.append("id" , 90133);
 
         // ... now storing the object
-
+        salesmen.insertOne(document);
         System.out.println(this.salesmen.find());
 
         // READ (Finding) the stored Documnent

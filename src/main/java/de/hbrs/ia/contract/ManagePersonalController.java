@@ -31,7 +31,14 @@ public class ManagePersonalController implements ManagePersonal {
     public ManagePersonalController(String host, int port, String db) {
         this.client = new MongoClient(host, port);
         this.database = client.getDatabase(db);
+        this.salesmen = database.getCollection("salesmen");
+        this.evaluationRecords = database.getCollection("evaluation_records");
 
+    }
+
+    //For testing
+    public MongoCollection<Document> getCollection(String collection){
+        return database.getCollection(collection);
     }
 
     @Override
@@ -43,6 +50,7 @@ public class ManagePersonalController implements ManagePersonal {
     @Override
     public void addPerformanceRecord(EvaluationRecord record, int sid) {
         //TODO Add evalRecord to existing SalesMan (exception if Salesman not found)
+        record.setSalesmanId(sid);
         evaluationRecords.insertOne(record.toDocument());
     }
 
@@ -81,13 +89,8 @@ public class ManagePersonalController implements ManagePersonal {
     }
 
     @Override
-    public EvaluationRecord readEvaluationRecords(int sid) throws Exception {
+    public EvaluationRecord readEvaluationRecord(int sid) throws Exception {
         //TODO read evalRecord from existing SalesMan (exception if Salesman not found)
-
-        Document salesman = salesmen.find(eq("id", sid)).first();
-        if (salesman == null) {
-            throw new Exception("Salesman with the ID " + sid + " not found");
-        }
 
         Document evalRecord = evaluationRecords.find(eq("salesman_id", sid)).first();
 
@@ -100,13 +103,13 @@ public class ManagePersonalController implements ManagePersonal {
     }
     //TODO CRUD -> Create Read Update Delete -> Create and Read represented, implement Update and Delete functions
     @Override
-    public boolean updateSalesMan(int sid, String key, String value) {
+    public boolean updateSalesMan(int sid, String key, Object value) {
        UpdateResult res = salesmen.updateOne(eq("id", sid), set(key, value));
        return res.wasAcknowledged();
     }
 
     @Override
-    public boolean updateEvaluationRecord(int sid, String key, String value) {
+    public boolean updateEvaluationRecord(int sid, String key, Object value) {
         UpdateResult res = evaluationRecords.updateOne(eq("salesman_id", sid), set(key, value));
         return res.wasAcknowledged();
     }
