@@ -43,4 +43,7 @@ public class SalesMan {
         document.append("id" , this.id);
         return document;
     }
+    public String toString() {
+        return "--- Salesman --- \n" + "Firstname: " + firstname + "\nLastname: " + lastname + "\nID: " + id;
+    }
 }
