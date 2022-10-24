@@ -18,8 +18,8 @@ import static com.mongodb.client.model.Updates.set;
 
 public class ManagePersonalController implements ManagePersonal {
 
-    private MongoClient client;
-    private MongoDatabase database;
+    private final MongoClient client;
+    private final MongoDatabase database;
     private MongoCollection<Document> salesmen;
     private MongoCollection<Document> evaluationRecords;
 
@@ -43,20 +43,17 @@ public class ManagePersonalController implements ManagePersonal {
 
     @Override
     public void createSalesMan(SalesMan record) {
-        //TODO create new DB entry
         salesmen.insertOne(record.toDocument());
     }
 
     @Override
     public void addPerformanceRecord(EvaluationRecord record, int sid) {
-        //TODO Add evalRecord to existing SalesMan (exception if Salesman not found)
         record.setSalesmanId(sid);
         evaluationRecords.insertOne(record.toDocument());
     }
 
     @Override
     public SalesMan readSalesMan(int sid) throws Exception {
-        //TODO read DB entry
         Document salesmenDoc = this.salesmen.find(eq("id", sid)).first();
         if(salesmenDoc == null){
             throw new Exception("Salesman with the ID " +  sid + " not found.");
@@ -70,7 +67,6 @@ public class ManagePersonalController implements ManagePersonal {
 
     @Override
     public List<SalesMan> querySalesMan(String attribute, String key) {
-        //TODO read DB entry
         List<SalesMan> salesmenList = new ArrayList<>();
         List<Document> results = new ArrayList<>();
 
@@ -90,8 +86,6 @@ public class ManagePersonalController implements ManagePersonal {
 
     @Override
     public EvaluationRecord readEvaluationRecord(int sid) throws Exception {
-        //TODO read evalRecord from existing SalesMan (exception if Salesman not found)
-
         Document evalRecord = evaluationRecords.find(eq("salesman_id", sid)).first();
 
         if (evalRecord == null) {
@@ -101,7 +95,6 @@ public class ManagePersonalController implements ManagePersonal {
 
         return new EvaluationRecord(evalRecord);
     }
-    //TODO CRUD -> Create Read Update Delete -> Create and Read represented, implement Update and Delete functions
     @Override
     public boolean updateSalesMan(int sid, String key, Object value) {
        UpdateResult res = salesmen.updateOne(eq("id", sid), set(key, value));
