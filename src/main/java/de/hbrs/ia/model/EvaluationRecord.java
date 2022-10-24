@@ -84,6 +84,11 @@ public class EvaluationRecord {
         document.append("year", this.year);
         return document;
     }
+
+    public String toString() {
+        return "--- Evaluation Record --- \n" + salesmanId + " - " + goalId + " - " +
+                goalDescription + " - " + targetValue + " - " + actualValue + " - " + year;
+    }
 }
 
 
